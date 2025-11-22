@@ -9,96 +9,136 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+
+<!-- Zen-Header oben -->
 <header>
-  <div>
-    <h1>Home-Energy Planer</h1>
-    <span>Profile schieben, Netzlast und Import-kWh live sehen</span>    
-   <p class="helper-text">
-     So nutzt du den Planer:
-     <br>1. Stelle oben deine PV-Peakleistung ein.
-     <br>2. Schätze deinen Grundbedarf (Grundlast-Slider).
-     <br>3. Aktiviere ein Gerät über den Schalter "aktiv".
-     <br>4. Schiebe die Startzeit in die für dich günstigste Preiszone.
-     <br>5. Lies unter dem Diagramm deinen Netzimport und die PV-Erzeugung ab.
-   </p>
+  <div class="brand">
+    <div class="brand-mark"></div>
+    <div class="brand-text">
+      <span>Razen Balance</span>
+      <span>Home-Energy Planer · Demo</span>
+    </div>
   </div>
-  <div class="chip">
-    <span class="chip-dot"></span>
+  <div class="beta-pill">
+    <span class="beta-pill-dot"></span>
     <span>Offline-Simulation · 15-Min-Raster</span>
   </div>
 </header>
 
-<main class="layout">
-  <!-- Linke Seite: Einstellungen / auf Mobile unten -->
-  <section class="card">
-    <h2>Verbraucher & PV</h2>
+<!-- Hauptbereich: links Text, rechts Zen-Karte mit App -->
+<main>
+  <!-- Hero-Text links -->
+  <div class="hero-text">
+    <div class="hero-eyebrow">Dein Energie-Zengarten</div>
+    <h1 class="hero-title">
+      Schiebe deine <span>Lasten</span> in den Sand und sieh, wie ruhig dein Netz wird.
+    </h1>
+    <p class="hero-subtitle">
+      Stelle deine Geräte, PV-Leistung und Grundlast ein – der Planer zeigt dir Netzimport,
+      maximale Netzlast und PV-Erzeugung im Tagesverlauf. Ideal zum Spielen mit Szenarien,
+      bevor du Hardware kaufst.
+    </p>
+    <p class="hero-subtitle-zen">
+      Wie Steine im Zengarten: Einmal gut gelegt, läuft dein Energiealltag entspannter.
+    </p>
+    <p class="helper-text">
+      So nutzt du den Planer:
+      <br>1. Stelle oben deine PV-Peakleistung ein.
+      <br>2. Schätze deinen Grundbedarf (Grundlast-Slider).
+      <br>3. Aktiviere ein Gerät über den Schalter „aktiv“.
+      <br>4. Schiebe die Startzeit in die für dich günstigste Preiszone.
+      <br>5. Lies unter dem Diagramm deinen Netzimport und die PV-Erzeugung ab.
+    </p>
+  </div>
 
-    <div class="pv-controls">
-      <div class="pv-row">
-        <label for="pvProfile">PV-Profil</label>
-        <select id="pvProfile">
-          <option value="summerSunny">Sommer · sonnig</option>
-          <option value="summerCloudy">Sommer · bewölkt</option>
-          <option value="winterSunny">Winter · sonnig</option>
-          <option value="winterCloudy">Winter · bewölkt</option>
-        </select>
-        <span></span>
-      </div>
-      <div class="pv-row">
-        <label for="pvPeak">PV-Peak</label>
-        <input id="pvPeak" type="range" min="0" max="8" step="0.1" value="2">
-        <span><span id="pvPeakLabel">2.0</span> kW</span>
-      </div>
-      <div class="pv-row">
-        <label for="baseLoad">Grundlast</label>
-        <input id="baseLoad" type="range" min="0" max="1" step="0.05" value="0.3">
-        <span><span id="baseLoadLabel">0.30</span> kW</span>
-      </div>
+  <!-- Rechte Seite: Zen-Karte, darin die App -->
+  <section class="zen-card">
+    <!-- Optionaler Header in der Karte -->
+    <div class="zen-header">
+      <h2>Dein Tagesprofil</h2>
+      <span>PV, Grundlast und Geräte als Zengarten</span>
     </div>
 
-    <div class="device-list" id="deviceList">
-      <!-- Geräte werden per JS eingefügt -->
+    <!-- Grid für die eigentliche App -->
+    <div class="app-layout">
+      <!-- Linke Seite: Einstellungen -->
+      <section class="card">
+        <h2>Verbraucher &amp; PV</h2>
+
+        <div class="pv-controls">
+          <div class="pv-row">
+            <label for="pvProfile">PV-Profil</label>
+            <select id="pvProfile">
+              <option value="summerSunny">Sommer · sonnig</option>
+              <option value="summerCloudy">Sommer · bewölkt</option>
+              <option value="winterSunny">Winter · sonnig</option>
+              <option value="winterCloudy">Winter · bewölkt</option>
+            </select>
+            <span></span>
+          </div>
+          <div class="pv-row">
+            <label for="pvPeak">PV-Peak</label>
+            <input id="pvPeak" type="range" min="0" max="8" step="0.1" value="2">
+            <span><span id="pvPeakLabel">2.0</span> kW</span>
+          </div>
+          <div class="pv-row">
+            <label for="baseLoad">Grundlast</label>
+            <input id="baseLoad" type="range" min="0" max="1" step="0.05" value="0.3">
+            <span><span id="baseLoadLabel">0.30</span> kW</span>
+          </div>
+        </div>
+
+        <div class="device-list" id="deviceList">
+          <!-- Geräte werden per JS eingefügt -->
+        </div>
+      </section>
+
+      <!-- Rechte Seite: Chart + Summary -->
+      <section class="card">
+        <h2>Leistungsprofil &amp; Netzlast</h2>
+
+        <!-- Tarif-Legende -->
+        <div class="tariff-legend">
+          <div class="tariff-pill">
+            <span class="tariff-dot night"></span>
+            <span>Nachtstrom · 0,18 €/kWh</span>
+          </div>
+          <div class="tariff-pill">
+            <span class="tariff-dot daylow"></span>
+            <span>PV-Fenster · 0,15 €/kWh</span>
+          </div>
+          <div class="tariff-pill">
+            <span class="tariff-dot normal"></span>
+            <span>Standardtarif · 0,28 €/kWh</span>
+          </div>
+        </div>
+
+        <div style="position:relative; height: min(55vh, 420px);">
+          <canvas id="powerChart"></canvas>
+        </div>
+
+        <div class="summary">
+          <div class="summary-item">
+            Netzimport heute: <span id="importKwh">0.00</span> kWh
+          </div>
+          <div class="summary-item">
+            max. Netzlast: <span id="maxNetKw">0.00</span> kW
+          </div>
+          <div class="summary-item">
+            PV-Erzeugung: <span id="pvKwh">0.00</span> kWh
+          </div>
+          <div class="summary-item">
+            Stromkosten gesamt: <span id="totalCost">0.00</span> €
+          </div>
+        </div>
+      </section>
     </div>
 
-  </section>
-
-  <!-- Rechte Seite: Chart + Summary / auf Mobile oben -->
-  <section class="card">
-    <h2>Leistungsprofil & Netzlast</h2>
-
-    <!-- NEU: Tarif-Legende -->
-    <div class="tariff-legend">
-      <div class="tariff-pill">
-        <span class="tariff-dot night"></span>
-        <span>Nachtstrom · 0,18 €/kWh</span>
-      </div>
-      <div class="tariff-pill">
-        <span class="tariff-dot daylow"></span>
-        <span>PV-Fenster · 0,15 €/kWh</span>
-      </div>
-      <div class="tariff-pill">
-        <span class="tariff-dot normal"></span>
-        <span>Standardtarif · 0,28 €/kWh</span>
-      </div>
-    </div>
-
-    <div style="position:relative; height: min(55vh, 420px);">
-      <canvas id="powerChart"></canvas>
-    </div>
-
-    <div class="summary">
-      <div class="summary-item">
-        Netzimport heute: <span id="importKwh">0.00</span> kWh
-      </div>
-      <div class="summary-item">
-        max. Netzlast: <span id="maxNetKw">0.00</span> kW
-      </div>
-      <div class="summary-item">
-        PV-Erzeugung: <span id="pvKwh">0.00</span> kWh
-      </div>
-      <div class="summary-item">
-        Stromkosten gesamt: <span id="totalCost">0.00</span> €
-      </div>
+    <!-- Kleiner Footer in der Zen-Karte (optional) -->
+    <div class="zen-footer">
+      <span><span class="zen-dot"></span> Grundlast + Geräte</span>
+      <span><span class="zen-dot pv"></span> PV-Erzeugung</span>
+      <span><span class="zen-dot grid"></span> Netzimport in rot im Chart</span>
     </div>
   </section>
 </main>
@@ -423,6 +463,140 @@
         const profile = dev.profiles[key];
         const durSlots = profileDurationSlots(profile);
         const durH2 = (durSlots * slotHours).toFixed(2);
+        const energy2 = profileEnergyKwh(profile).toFixed(2);
+
+        const newMaxStart = totalSlots - durSlots;
+        startInput.max = newMaxStart;
+        if (state.start > newMaxStart) {
+          state.start = newMaxStart;
+          startInput.value = newMaxStart;
+          startLabel.textContent = slotToTimeLabel(state.start);
+        }
+
+        metaSpan.textContent = `${durH2} h · ${energy2} kWh (${profile.label})`;
+        recompute();
+      });
+    }
+
+    // EV-Events
+    if (isEv) {
+      const powerSelect = row.querySelector(`#power_${dev.id}`);
+      const energyInput = row.querySelector(`#energy_${dev.id}`);
+      const durationLabel = row.querySelector(`#duration_${dev.id}`);
+      const metaSpan = row.querySelector(`#meta_${dev.id}`);
+
+      function updateEvDerived() {
+        state.durationSlots = computeEvDurationSlots(state.energyKwh, state.powerKw);
+        const maxStartLocal = totalSlots - state.durationSlots;
+        startInput.max = maxStartLocal;
+        if (state.start > maxStartLocal) {
+          state.start = maxStartLocal;
+          startInput.value = maxStartLocal;
+          startLabel.textContent = slotToTimeLabel(state.start);
+        }
+        const durH = (state.durationSlots * slotHours).toFixed(2);
+        durationLabel.textContent = `${durH} h`;
+        metaSpan.textContent = `${state.powerKw.toFixed(1)} kW · ${state.energyKwh.toFixed(1)} kWh · ${durH} h`;
+      }
+
+      powerSelect.addEventListener("change", () => {
+        state.powerKw = parseFloat(powerSelect.value);
+        updateEvDerived();
+        recompute();
+      });
+
+      energyInput.addEventListener("input", () => {
+        const val = parseFloat(energyInput.value);
+        state.energyKwh = isNaN(val) ? dev.defaultEnergyKwh : Math.max(1, Math.min(val, 80));
+        energyInput.value = state.energyKwh;
+        updateEvDerived();
+        recompute();
+      });
+
+      // Initiale Ableitungen
+      updateEvDerived();
+    }
+
+    // Initial Collapsed-State setzen
+    updateCollapsedState();
+  });
+
+  // PV & Grundlast Slider
+  const pvPeakInput = document.getElementById("pvPeak");
+  const pvPeakLabel = document.getElementById("pvPeakLabel");
+  const baseLoadInput = document.getElementById("baseLoad");
+  const baseLoadLabel = document.getElementById("baseLoadLabel");
+
+  pvPeakInput.addEventListener("input", () => {
+    pvPeakLabel.textContent = parseFloat(pvPeakInput.value).toFixed(1);
+    recompute();
+  });
+  baseLoadInput.addEventListener("input", () => {
+    baseLoadLabel.textContent = parseFloat(baseLoadInput.value).toFixed(2);
+    recompute();
+  });
+
+  pvProfileSelect.addEventListener("change", () => {
+    updatePvShape();
+    recompute();
+  });
+
+  // PV-Profil: normierte Form pro kW-Peak, skaliert mit pvPeak
+  function calculatePvProfile() {
+    const peakKw = parseFloat(pvPeakInput.value); // installierte Peakleistung
+    return pvShapePerKw.map(v => v * peakKw);
+  }
+
+  function calculateProfiles() {
+    const baseLoad = parseFloat(baseLoadInput.value);
+    const total = new Array(totalSlots).fill(baseLoad);
+
+    devices.forEach(dev => {
+      const state = deviceState[dev.id];
+      if (!state || !state.enabled) return;
+      const start = state.start;
+
+      if (dev.profiles) {
+        const profileKey = state.profileKey || dev.defaultProfile;
+        const profile = dev.profiles[profileKey];
+        const powers = profile.powersKw;
+        for (let i = 0; i < powers.length; i++) {
+          const idx = start + i;
+          if (idx >= 0 && idx < totalSlots) {
+            total[idx] += powers[i];
+          }
+        }
+      } else if (dev.isEv) {
+        for (let i = 0; i < state.durationSlots; i++) {
+          const idx = start + i;
+          if (idx >= 0 && idx < totalSlots) {
+            total[idx] += state.powerKw;
+          }
+        }
+      } else {
+        for (let i = 0; i < dev.durationSlots; i++) {
+          const idx = start + i;
+          if (idx >= 0 && idx < totalSlots) {
+            total[idx] += dev.power;
+          }
+        }
+      }
+    });
+
+    return total;
+  }
+
+  // *** Helper: Zonenzuordnung für einen Slot ***
+  function getZoneTypeForSlot(slotIndex) {
+    const hour = Math.floor(slotIndex / slotsPerHour);
+    // Nachtstrom 23–06
+    if (hour >= 23 || hour < 6) {
+      return "night";
+    }
+    // Tag günstig, wenn PV-Ertrag >= 70% des Peak (normiert)
+    if (pvShapePerKw[slotIndex] >= 0.7) {
+      return "dayLow";
+          const durH2 = (durSlots * slotHours).toFixed(2);
         const energy2 = profileEnergyKwh(profile).toFixed(2);
 
         const newMaxStart = totalSlots - durSlots;
