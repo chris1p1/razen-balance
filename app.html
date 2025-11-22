@@ -53,13 +53,11 @@
 
   <!-- Rechte Seite: Zen-Karte, darin die App -->
   <section class="zen-card">
-    <!-- Optionaler Header in der Karte -->
     <div class="zen-header">
       <h2>Dein Tagesprofil</h2>
       <span>PV, Grundlast und Geräte als Zengarten</span>
     </div>
 
-    <!-- Grid für die eigentliche App -->
     <div class="app-layout">
       <!-- Linke Seite: Einstellungen -->
       <section class="card">
@@ -97,7 +95,6 @@
       <section class="card">
         <h2>Leistungsprofil &amp; Netzlast</h2>
 
-        <!-- Tarif-Legende -->
         <div class="tariff-legend">
           <div class="tariff-pill">
             <span class="tariff-dot night"></span>
@@ -134,11 +131,10 @@
       </section>
     </div>
 
-    <!-- Kleiner Footer in der Zen-Karte (optional) -->
     <div class="zen-footer">
       <span><span class="zen-dot"></span> Grundlast + Geräte</span>
       <span><span class="zen-dot pv"></span> PV-Erzeugung</span>
-      <span><span class="zen-dot grid"></span> Netzimport in rot im Chart</span>
+      <span><span class="zen-dot grid"></span> Netzimport (rot) im Chart</span>
     </div>
   </section>
 </main>
@@ -174,7 +170,6 @@
     if (powerKw <= 0) return 0;
     const hours = energyKwh / powerKw;
     const slots = Math.ceil(hours / slotHours);
-    // max. 24h, mind. 1 Slot
     return Math.max(1, Math.min(slots, totalSlots));
   }
 
@@ -288,7 +283,6 @@
   function updatePvShape() {
     const key = pvProfileSelect.value || "summerSunny";
     const base24 = pvShapesPerKw24[key] || pvShapesPerKw24.summerSunny;
-    // Jede Stunde 4× wiederholen -> 96 Slots
     pvShapePerKw = base24.flatMap(v => [v, v, v, v]);
   }
 
@@ -326,7 +320,6 @@
     row.className = "device-row";
 
     if (hasProfiles) {
-      // Profilgeräte (WM / GS)
       const durH = (profileDurationSlots(initialProfile) * slotHours).toFixed(2);
       const energyKwh = profileEnergyKwh(initialProfile).toFixed(2);
 
@@ -361,7 +354,6 @@
         </div>
       `;
     } else if (isEv) {
-      // EV-Sonderfall
       const durH = (state.durationSlots * slotHours).toFixed(2);
 
       row.innerHTML = `
@@ -400,7 +392,6 @@
         </div>
       `;
     } else {
-      // Normale Rechteck-Geräte
       row.innerHTML = `
         <div class="device-header">
           <div class="device-header-main">
@@ -411,7 +402,7 @@
             </div>
           </div>
           <label class="device-enable">
-            <input id="enable_${dev.id}" type="checkbox" >
+            <input id="enable_${dev.id}" type="checkbox">
             <span>aktiv</span>
           </label>
         </div>
@@ -513,11 +504,9 @@
         recompute();
       });
 
-      // Initiale Ableitungen
       updateEvDerived();
     }
 
-    // Initial Collapsed-State setzen
     updateCollapsedState();
   });
 
@@ -541,9 +530,8 @@
     recompute();
   });
 
-  // PV-Profil: normierte Form pro kW-Peak, skaliert mit pvPeak
   function calculatePvProfile() {
-    const peakKw = parseFloat(pvPeakInput.value); // installierte Peakleistung
+    const peakKw = parseFloat(pvPeakInput.value);
     return pvShapePerKw.map(v => v * peakKw);
   }
 
@@ -589,153 +577,16 @@
   // *** Helper: Zonenzuordnung für einen Slot ***
   function getZoneTypeForSlot(slotIndex) {
     const hour = Math.floor(slotIndex / slotsPerHour);
-    // Nachtstrom 23–06
     if (hour >= 23 || hour < 6) {
       return "night";
     }
-    // Tag günstig, wenn PV-Ertrag >= 70% des Peak (normiert)
-    if (pvShapePerKw[slotIndex] >= 0.7) {
-      return "dayLow";
-          const durH2 = (durSlots * slotHours).toFixed(2);
-        const energy2 = profileEnergyKwh(profile).toFixed(2);
-
-        const newMaxStart = totalSlots - durSlots;
-        startInput.max = newMaxStart;
-        if (state.start > newMaxStart) {
-          state.start = newMaxStart;
-          startInput.value = newMaxStart;
-          startLabel.textContent = slotToTimeLabel(state.start);
-        }
-
-        metaSpan.textContent = `${durH2} h · ${energy2} kWh (${profile.label})`;
-        recompute();
-      });
-    }
-
-    // EV-Events
-    if (isEv) {
-      const powerSelect = row.querySelector(`#power_${dev.id}`);
-      const energyInput = row.querySelector(`#energy_${dev.id}`);
-      const durationLabel = row.querySelector(`#duration_${dev.id}`);
-      const metaSpan = row.querySelector(`#meta_${dev.id}`);
-
-      function updateEvDerived() {
-        state.durationSlots = computeEvDurationSlots(state.energyKwh, state.powerKw);
-        const maxStartLocal = totalSlots - state.durationSlots;
-        startInput.max = maxStartLocal;
-        if (state.start > maxStartLocal) {
-          state.start = maxStartLocal;
-          startInput.value = maxStartLocal;
-          startLabel.textContent = slotToTimeLabel(state.start);
-        }
-        const durH = (state.durationSlots * slotHours).toFixed(2);
-        durationLabel.textContent = `${durH} h`;
-        metaSpan.textContent = `${state.powerKw.toFixed(1)} kW · ${state.energyKwh.toFixed(1)} kWh · ${durH} h`;
-      }
-
-      powerSelect.addEventListener("change", () => {
-        state.powerKw = parseFloat(powerSelect.value);
-        updateEvDerived();
-        recompute();
-      });
-
-      energyInput.addEventListener("input", () => {
-        const val = parseFloat(energyInput.value);
-        state.energyKwh = isNaN(val) ? dev.defaultEnergyKwh : Math.max(1, Math.min(val, 80));
-        energyInput.value = state.energyKwh;
-        updateEvDerived();
-        recompute();
-      });
-
-      // Initiale Ableitungen
-      updateEvDerived();
-    }
-
-    // Initial Collapsed-State setzen
-    updateCollapsedState();
-  });
-
-  // PV & Grundlast Slider
-  const pvPeakInput = document.getElementById("pvPeak");
-  const pvPeakLabel = document.getElementById("pvPeakLabel");
-  const baseLoadInput = document.getElementById("baseLoad");
-  const baseLoadLabel = document.getElementById("baseLoadLabel");
-
-  pvPeakInput.addEventListener("input", () => {
-    pvPeakLabel.textContent = parseFloat(pvPeakInput.value).toFixed(1);
-    recompute();
-  });
-  baseLoadInput.addEventListener("input", () => {
-    baseLoadLabel.textContent = parseFloat(baseLoadInput.value).toFixed(2);
-    recompute();
-  });
-
-  pvProfileSelect.addEventListener("change", () => {
-    updatePvShape();
-    recompute();
-  });
-
-  // PV-Profil: normierte Form pro kW-Peak, skaliert mit pvPeak
-  function calculatePvProfile() {
-    const peakKw = parseFloat(pvPeakInput.value); // installierte Peakleistung
-    return pvShapePerKw.map(v => v * peakKw);
-  }
-
-  function calculateProfiles() {
-    const baseLoad = parseFloat(baseLoadInput.value);
-    const total = new Array(totalSlots).fill(baseLoad);
-
-    devices.forEach(dev => {
-      const state = deviceState[dev.id];
-      if (!state || !state.enabled) return;
-      const start = state.start;
-
-      if (dev.profiles) {
-        const profileKey = state.profileKey || dev.defaultProfile;
-        const profile = dev.profiles[profileKey];
-        const powers = profile.powersKw;
-        for (let i = 0; i < powers.length; i++) {
-          const idx = start + i;
-          if (idx >= 0 && idx < totalSlots) {
-            total[idx] += powers[i];
-          }
-        }
-      } else if (dev.isEv) {
-        for (let i = 0; i < state.durationSlots; i++) {
-          const idx = start + i;
-          if (idx >= 0 && idx < totalSlots) {
-            total[idx] += state.powerKw;
-          }
-        }
-      } else {
-        for (let i = 0; i < dev.durationSlots; i++) {
-          const idx = start + i;
-          if (idx >= 0 && idx < totalSlots) {
-            total[idx] += dev.power;
-          }
-        }
-      }
-    });
-
-    return total;
-  }
-
-  // *** Helper: Zonenzuordnung für einen Slot ***
-  function getZoneTypeForSlot(slotIndex) {
-    const hour = Math.floor(slotIndex / slotsPerHour);
-    // Nachtstrom 23–06
-    if (hour >= 23 || hour < 6) {
-      return "night";
-    }
-    // Tag günstig, wenn PV-Ertrag >= 70% des Peak (normiert)
     if (pvShapePerKw[slotIndex] >= 0.7) {
       return "dayLow";
     }
-    // Sonst Normal
     return "normal";
   }
 
-  // *** Chart-Plugin NUR für Hintergrundfärbung (kein Text mehr) ***
+  // *** Chart-Plugin nur für Hintergrundfärbung ***
   const priceBackgroundPlugin = {
     id: "priceBackground",
     beforeDraw(chart, args, pluginOptions) {
@@ -745,10 +596,8 @@
       const xScale = scales.x;
 
       ctx.save();
-
-      // Hintergründe zeichnen (keine Texte)
       zones.forEach(zone => {
-        if (!zone.color) return; // normal-Zone ohne Farbe
+        if (!zone.color) return;
         const xStart = xScale.getPixelForValue(zone.start);
         const xEnd = xScale.getPixelForValue(zone.end);
         ctx.fillStyle = zone.color;
@@ -759,14 +608,12 @@
           chartArea.bottom - chartArea.top
         );
       });
-
       ctx.restore();
     }
   };
 
   Chart.register(priceBackgroundPlugin);
 
-  // Chart.js Setup
   const ctx = document.getElementById("powerChart").getContext("2d");
   const chartConfig = {
     type: "line",
@@ -806,11 +653,11 @@
       maintainAspectRatio: false,
       plugins: {
         priceBackground: {
-          zones: [] // wird in recompute() gesetzt
+          zones: []
         },
         legend: {
           labels: {
-            color: "#e5e7eb",
+            color: "#6b7280",
             font: { size: 11 }
           }
         },
@@ -833,7 +680,7 @@
             font: { size: 10 }
           },
           grid: {
-            color: "rgba(31,41,55,0.6)"
+            color: "rgba(209,213,219,0.6)"
           }
         },
         y: {
@@ -843,7 +690,7 @@
             font: { size: 10 }
           },
           grid: {
-            color: "rgba(31,41,55,0.6)"
+            color: "rgba(209,213,219,0.6)"
           }
         }
       }
@@ -852,19 +699,17 @@
 
   const powerChart = new Chart(ctx, chartConfig);
 
-  // Summary-Labels
   const importKwhEl = document.getElementById("importKwh");
   const maxNetKwEl = document.getElementById("maxNetKw");
   const pvKwhEl = document.getElementById("pvKwh");
   const totalCostEl = document.getElementById("totalCost");
 
-  // *** Zonen für Chart-Hintergrund berechnen ***
   function buildPriceZonesForChart() {
     const zones = [];
     const zoneColors = {
-      night: "rgba(37, 99, 235, 0.18)",   // blau
-      dayLow: "rgba(22, 163, 74, 0.16)",  // grün
-      normal: null                        // keine Flächenfarbe
+      night: "rgba(37, 99, 235, 0.18)",
+      dayLow: "rgba(22, 163, 74, 0.16)",
+      normal: null
     };
 
     let currentType = null;
@@ -900,7 +745,6 @@
     return zones;
   }
 
-  // *** Preis für einen Slot (€/kWh) ***
   function getPriceForSlot(slotIndex) {
     const z = getZoneTypeForSlot(slotIndex);
     switch (z) {
@@ -918,7 +762,6 @@
     const total = calculateProfiles();
     const net = total.map((p, i) => Math.max(0, p - pv[i]));
 
-    // kWh-Integrale + Kosten
     let importKwh = 0;
     let pvKwh = 0;
     let maxNet = 0;
@@ -926,7 +769,7 @@
 
     for (let i = 0; i < totalSlots; i++) {
       const netPower = net[i];
-      const slotEnergy = netPower * slotHours; // kWh
+      const slotEnergy = netPower * slotHours;
       importKwh += slotEnergy;
       pvKwh += pv[i] * slotHours;
       if (netPower > maxNet) maxNet = netPower;
@@ -940,24 +783,19 @@
     maxNetKwEl.textContent = maxNet.toFixed(2);
     totalCostEl.textContent = totalCost.toFixed(2);
 
-    // Daten ins Chart
     powerChart.data.datasets[0].data = pv;
     powerChart.data.datasets[1].data = total;
     powerChart.data.datasets[2].data = net;
 
-    // Zonen-Hintergrund aktualisieren
     powerChart.options.plugins.priceBackground.zones = buildPriceZonesForChart();
-
     powerChart.update();
   }
 
-  // Initial: PV-Shape setzen & einmal rechnen
   updatePvShape();
   recompute();
 </script>
 
-
-
+<!-- Feedback-Card -->
 <section class="card feedback-card">
   <h2>Dein Feedback zur Demo</h2>
 
@@ -965,7 +803,6 @@
         action="https://formspree.io/f/xdkjkvor"
         method="POST">
 
-    <!-- 1) Wie nützlich findest du die Demo? -->
     <div class="feedback-block">
       <div class="feedback-question-title">Wie nützlich findest du die Demo?</div>
       <div class="feedback-options">
@@ -992,7 +829,6 @@
       </div>
     </div>
 
-    <!-- 2) Was fehlt dir? -->
     <div class="feedback-block">
       <div class="feedback-question-title">Was fehlt dir am meisten?</div>
       <div class="feedback-options">
@@ -1002,7 +838,7 @@
         </label>
         <label>
           <input type="checkbox" name="fehlt[]" value="Preise & Tarife genauer">
-          Preise & Tarife genauer
+          Preise &amp; Tarife genauer
         </label>
         <label>
           <input type="checkbox" name="fehlt[]" value="Speicher / Batterie">
@@ -1030,7 +866,6 @@
       </div>
     </div>
 
-    <!-- 3) Würdest du das nutzen? -->
     <div class="feedback-block">
       <div class="feedback-question-title">Würdest du das Tool nutzen?</div>
       <div class="feedback-options">
@@ -1049,7 +884,6 @@
       </div>
     </div>
 
-    <!-- 4) Zahlungsbereitschaft -->
     <div class="feedback-block">
       <div class="feedback-question-title">
         Was würdest du dafür zahlen, wenn das Tool auf deine Bedürfnisse angepasst ist?
@@ -1082,7 +916,6 @@
       </div>
     </div>
 
-    <!-- Optional: kurzer Freitext -->
     <div class="feedback-block">
       <div class="feedback-question-title">Noch ein Gedanke dazu? (optional)</div>
       <textarea class="feedback-textarea"
@@ -1090,7 +923,6 @@
                 placeholder="Was ist dir positiv oder negativ aufgefallen?"></textarea>
     </div>
 
-    <!-- Email + Submit -->
     <div class="feedback-submit-row">
       <div class="feedback-email">
         <div class="feedback-help">Optional: E-Mail, falls du Rückfragen zulässt</div>
@@ -1103,13 +935,14 @@
   </form>
 </section>
 
-
-  
-
-<footer style="padding: 0.75rem 1.5rem; font-size: 0.8rem; color: #9ca3af; border-top: 1px solid #1f2937; text-align: right;">
-  <a href="impressum.html" style="color: #9ca3af; text-decoration: none;">Impressum</a>
-  &nbsp;|&nbsp;
-  <a href="datenschutz.html" style="color: #9ca3af; text-decoration: none;">Datenschutz</a>
+<footer>
+  <span>© 2025 Razen Balance · Home-Energy Planer (Demo)</span>
+  <span>
+    <a href="impressum.html">Impressum</a>
+    &nbsp;·&nbsp;
+    <a href="datenschutz.html">Datenschutz</a>
+  </span>
 </footer>
+
 </body>
 </html>
