@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: http://razen-balance.com/sitemap.xml
