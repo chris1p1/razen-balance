@@ -2,321 +2,154 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Razen Balance – Home-Energy Planer für deinen Alltag</title>
+  <title>Razen Balance – Home-Energy Planer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Home-Energy Planer von Razen Balance: Plane deinen Stromverbrauch über den Tag, verschiebe Waschmaschine, Trockner, Spülmaschine, Wärmepumpe und E-Auto in passende Zeitfenster und sieh sofort Netzlast, kWh und Kosten.">
-  <meta name="google-site-verification" content="0l1Y2iiGZI3ExUlShivBm5T727Wo68nx6wv0xR4OCm4" />
-  
+  <meta name="description" content="Razen Balance Home-Energy Planer: Plane deinen Stromverbrauch im Tagesverlauf, verschiebe Lasten in passende Zeitfenster und finde eine entspannte Balance aus Komfort, Eigenverbrauch und Kosten.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Header / Navigation -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <div class="logo">
-        <span class="logo-mark">⚡</span>
-        <span class="logo-text">Razen Balance · Home-Energy Planer</span>
-      </div>
 
-      <nav class="main-nav">
-        <a href="#how-it-works">So funktioniert’s</a>
-        <a href="#use-cases">Für wen?</a>
-        <a href="#faq">FAQ</a>
-        <a href="app.html" class="btn btn-ghost">Demo starten</a>
-      </nav>
+<!-- Gleicher Zen-Header wie in der App -->
+<header>
+  <div class="brand">
+    <div class="brand-mark"></div>
+    <div class="brand-text">
+      <span>Razen Balance</span>
+      <span>Home-Energy Planer</span>
     </div>
-  </header>
+  </div>
+  <div class="beta-pill">
+    <span class="beta-pill-dot"></span>
+    <span>Persönliches Projekt · Demo ohne Login</span>
+  </div>
+</header>
 
-  <main>
-    <!-- Hero -->
-    <section class="hero">
-      <div class="container hero-inner">
-        <div class="hero-text">
-          <h1>Strom planen, Alltag entlasten.</h1>
-          <p class="hero-subtitle">
-            Verschiebe Waschmaschine, Trockner, Spülmaschine, Wärmepumpe und E-Auto in passende Zeitfenster
-            und sieh sofort, wie sich Netzlast, Eigenverbrauch und Kosten verändern – in Ruhe und ohne Fachchinesisch.
-          </p>
+<!-- Hauptbereich: links Text, rechts Zen-Karte mit Infos -->
+<main>
+  <!-- Hero-Text links -->
+  <div class="hero-text">
+    <div class="hero-eyebrow">Dein Energie-Planer für den Alltag</div>
+    <h1 class="hero-title">
+      Schiebe deine <span>Lasten</span> in Balance mit deinem Tag.
+    </h1>
+    <p class="hero-subtitle">
+      Der Home-Energy Planer von Razen Balance zeigt dir, wie Waschmaschine,
+      Trockner, Spülmaschine, Wärmepumpe und E-Auto über den Tag verteilt sind –
+      und was passiert, wenn du sie in sonnige oder entspannte Zeitfenster verschiebst.
+    </p>
+    <p class="hero-subtitle-zen">
+      Statt immer nur auf die Rechnung zu schauen, bekommst du ein ruhiges Bild
+      deines Energie-Alltags – klar, übersichtlich und ohne Fachchinesisch.
+    </p>
 
-          <div class="hero-actions">
-            <a href="app.html" class="btn btn-primary">Demo starten</a>
-            <a href="#how-it-works" class="btn btn-secondary">So funktioniert’s</a>
-          </div>
+    <p class="helper-text">
+      Was du mit der Demo machen kannst:
+      <br>• Szenarien durchspielen, bevor du Hardware kaufst oder Tarife wechselst
+      <br>• sehen, wie viel deine PV im Tagesverlauf wirklich abdeckt
+      <br>• erkennen, welche Geräte deine Netzlast nach oben ziehen
+      <br>• herausfinden, welche Verschiebungen sich im Alltag gut anfühlen
+    </p>
 
-          <p class="hero-meta">
-            Keine Registrierung · Läuft im Browser · Ideal für PV-Besitzer,
-            Wärmepumpen-Haushalte und E-Auto-Fahrer · Eine Razen&nbsp;Balance Demo
-          </p>
-        </div>
+    <p class="helper-text">
+      <a href="app.html">→ Direkt zur Demo springen</a><br>
+      Läuft komplett im Browser, ohne Registrierung.
+    </p>
+  </div>
 
-        <div class="hero-highlight">
-          <div class="hero-card">
-            <h2>Tagesprofil in 30 Sekunden im Gleichgewicht</h2>
-            <ul class="hero-list">
-              <li>PV-Peak &amp; Grundlast einstellen</li>
-              <li>Typische Geräte aktivieren (WM, Trockner, Spülmaschine, E-Auto, Wärmepumpe)</li>
-              <li>Verbraucher in sonnige oder günstige Zonen schieben</li>
-              <li>Netzlast, PV-Anteil und Kosten live im Diagramm sehen</li>
-            </ul>
-            <a href="#demo" class="hero-link">Zur interaktiven Vorschau ↓</a>
-          </div>
-        </div>
-      </div>
-    </section>
+  <!-- Rechte Seite: Zen-Karte, darin Infos statt App -->
+  <section class="zen-card">
+    <div class="zen-header">
+      <h2>Was der Home-Energy Planer für dich tut</h2>
+      <span>Weniger Rätselraten, mehr Übersicht im Tagesprofil</span>
+    </div>
 
-    <!-- Abschnitt: So funktioniert’s -->
-    <section id="how-it-works" class="section">
-      <div class="container">
-        <h2>So funktioniert der Home-Energy Planer</h2>
-        <p class="section-intro">
-          Der Planer simuliert deinen Tagesverlauf in Zeitscheiben und zeigt dir,
-          wann sich welche Verbraucher lohnen – mit und ohne PV. Du siehst nicht nur Zahlen,
-          sondern ein Tagesbild, das zu deinem Alltag passt.
+    <div class="app-layout">
+      <!-- Linke Karte: Funktionen -->
+      <section class="card">
+        <h2>Funktionen auf einen Blick</h2>
+        <ul class="hero-list">
+          <li>PV-Leistung und Grundlast im Tagesverlauf simulieren</li>
+          <li>Typische Haushaltsgeräte mit realistischen Profilen einblenden</li>
+          <li>Startzeiten verschieben und Lastspitzen sichtbar machen</li>
+          <li>Netzimport, PV-Erzeugung und Kosten abschätzen</li>
+        </ul>
+        <p class="helper-text">
+          Die Demo arbeitet mit einem 15-Minuten-Raster. Für jede Zeitscheibe
+          wird berechnet, wie viel Leistung aus PV, Grundlast und Geräten kommt
+          – und was davon am Ende wirklich aus dem Netz gezogen wird.
         </p>
+      </section>
 
-        <div class="steps-grid">
-          <article class="step-card">
-            <span class="step-number">1</span>
-            <h3>PV-Leistung &amp; Grundlast einstellen</h3>
-            <p>
-              Stelle deine PV-Peakleistung ein und schätze die Grundlast deines Haushalts.
-              Damit legst du das Basisprofil fest, bevor Geräte hinzukommen.
-            </p>
-          </article>
-
-          <article class="step-card">
-            <span class="step-number">2</span>
-            <h3>Geräte aktivieren</h3>
-            <p>
-              Wähle typische Verbraucher aus: Waschmaschine, Trockner,
-              Spülmaschine, E-Auto-Ladung, Wärmepumpe, Boiler usw.
-              Jeder hat ein realistisches Lastprofil statt nur einer Zahl.
-            </p>
-          </article>
-
-          <article class="step-card">
-            <span class="step-number">3</span>
-            <h3>In passende Zonen schieben</h3>
-            <p>
-              Ziehe die Startzeiten der Geräte in Zeitfenster mit hoher PV-Erzeugung
-              oder günstigeren Zonen. Der Planer berechnet Netzlast und kWh automatisch,
-              ohne dass du Tabellen wälzen musst.
-            </p>
-          </article>
-
-          <article class="step-card">
-            <span class="step-number">4</span>
-            <h3>Netzimport &amp; Kosten ablesen</h3>
-            <p>
-              Unter dem Diagramm siehst du Tagesverbrauch, maximale Netzlast,
-              Eigenverbrauchsanteil und geschätzte Stromkosten auf einen Blick.
-              So findest du eine gute Balance zwischen Komfort und Effizienz.
-            </p>
-          </article>
-        </div>
-
-        <!-- ausblendbare Detail-Texte (standardmäßig minimiert) -->
-        <div class="details-grid">
-          <details>
-            <summary>Technische Details anzeigen</summary>
-            <p>
-              Die Simulation arbeitet mit einem Tagesprofil in festen Zeitscheiben
-              (15-Minuten-Raster). Für jeden Zeitschritt werden Gesamtlast,
-              PV-Erzeugung und daraus der resultierende Netzimport berechnet.
-              Je nach Preiszone werden die kWh mit unterschiedlichen Tarifen bewertet
-              (z.&nbsp;B. Nachtstrom, Tagstrom, PV-dominierte Zeiten).
-            </p>
-          </details>
-
-          <details>
-            <summary>Annahmen zu Strompreisen (Demo)</summary>
-            <p>
-              In der Demo werden vereinfachte Preiszonen genutzt, um den Effekt von
-              Lastverschiebung sichtbar zu machen (z.&nbsp;B. Standardtarif, günstige
-              PV-Zeiten, leicht reduzierter Nachtstrom). Die Werte sind bewusst
-              einfach gehalten und können später an deine eigenen Tarife angepasst werden.
-            </p>
-          </details>
-
-          <details>
-            <summary>Was der Planer <strong>nicht</strong> ist</summary>
-            <p>
-              Der Home-Energy Planer ersetzt keine rechtsverbindliche Abrechnung und
-              keine detaillierte Netzplanung. Er soll dir ein verständliches
-              Tagesbild geben und dir helfen, ein Gefühl für Lastverschiebung,
-              Eigenverbrauch und eine stimmige Energienutzung zu bekommen.
-            </p>
-          </details>
-        </div>
-      </div>
-    </section>
-
-    <!-- Demo-Vorschau mit iframe -->
-    <section id="demo" class="section section-alt">
-      <div class="container">
-        <h2>Interaktive Demo</h2>
-        <p class="section-intro">
-          Probiere den Planer direkt im Browser aus. Verschiebe deine Geräte,
-          experimentiere mit PV-Leistung und sieh sofort, was mit Netzlast
-          und Kosten passiert – ganz ohne Risiko und ohne Login.
-        </p>
-
-        <div class="demo-frame-wrapper">
-          <iframe
-            src="app.html"
-            loading="lazy"
-            title="Home-Energy Planer Demo"
-          ></iframe>
-        </div>
-
-        <div class="demo-actions">
-          <a href="app.html" class="btn btn-primary">
-            Demo im Vollbild öffnen
-          </a>
-          <p class="demo-hint">
-            Tipp: Am Desktop im Vollbild nutzen – dann hast du Diagramm und
-            Einstellregler komfortabel nebeneinander.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Für wen ist das? -->
-    <section id="use-cases" class="section">
-      <div class="container">
-        <h2>Für wen ist der Home-Energy Planer?</h2>
-
-        <div class="usecase-grid">
-          <article class="usecase-card">
-            <h3>PV-Besitzer</h3>
-            <p>
-              Du willst mehr Eigenverbrauch statt Einspeisung zum Niedrigtarif?
-              Schau dir an, welche Verbraucher du in die PV-Spitzen legen solltest
-              und wie dein Tag aussieht, wenn du das bewusst tust.
-            </p>
-          </article>
-
-          <article class="usecase-card">
-            <h3>E-Auto-Fahrer</h3>
-            <p>
-              Du lädst dein Auto zu Hause? Plane, ob du eher nachts oder bei
-              hoher PV-Leistung laden möchtest – und wie sich das auf deine
-              maximale Netzlast auswirkt.
-            </p>
-          </article>
-
-          <article class="usecase-card">
-            <h3>Haushalte mit Wärmepumpe</h3>
-            <p>
-              Wärmepumpen und Speicher können flexibel laufen. Der Planer hilft
-              dir zu verstehen, wie du Heizzeiten verschieben kannst, ohne
-              Komfort zu verlieren – und wo noch Reserven im Alltag stecken.
-            </p>
-          </article>
-
-          <article class="usecase-card">
-            <h3>Neugierige Energie-Nerds &amp; Pragmatiker</h3>
-            <p>
-              Du willst wissen, wie dein Lastprofil aussieht, wenn du alles
-              „einfach sinnvoll“ legst statt perfekt optimierst?
-              Dann ist die Demo genau dein Spielplatz.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ mit ausblendbaren Antworten -->
-    <section id="faq" class="section section-alt">
-      <div class="container">
-        <h2>FAQ</h2>
-
-        <div class="faq-list">
-          <details>
-            <summary>Brauche ich dafür einen Smart Meter oder Home-Automation?</summary>
-            <p>
-              Nein. Die Demo arbeitet mit typischen Annahmen und einfachen
-              Eingaben. Du musst keine Geräte verbinden, nichts installieren
-              und keine Daten freigeben. Es geht um Verständnis, nicht um
-              dauerhafte Überwachung.
-            </p>
-          </details>
-
-          <details>
-            <summary>Sind die Ergebnisse 100&nbsp;% exakt?</summary>
-            <p>
-              Nein, es handelt sich um eine vereinfachte Simulation. Ziel ist,
-              Zusammenhänge sichtbar zu machen – nicht eine Abrechnung auf
-              Cent-Basis zu ersetzen. Sie soll dir helfen, gute Entscheidungen
-              im Alltag zu treffen.
-            </p>
-          </details>
-
-          <details>
-            <summary>Kostet der Home-Energy Planer etwas?</summary>
-            <p>
-              Die aktuelle Demo ist kostenlos im Browser nutzbar. Weitere
-              Funktionen (z.&nbsp;B. Speichern von Profilen, echte Tarife,
-              Export oder Integration in andere Systeme) sind in Planung.
-            </p>
-          </details>
-
-          <details>
-            <summary>Kann ich eigene Tarife und Geräte eintragen?</summary>
-            <p>
-              In der Demo sind die Optionen begrenzt. Die Idee von Razen Balance
-              ist jedoch, später frei konfigurierbare Tarife, Geräteprofile und
-              ggf. Schnittstellen zu Smart-Home-Systemen anzubieten – ohne dich
-              mit Einstellungen zu überfordern.
-            </p>
-          </details>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <section class="section">
-    <div class="container">
-      <div class="usecase-card" style="margin-top: 1.5rem;">
-        <h3>Was hinter Razen Balance steckt</h3>
+      <!-- Rechte Karte: Für wen & Marke -->
+      <section class="card">
+        <h2>Für wen &amp; wofür Razen Balance steht</h2>
         <p>
-          Dieses Projekt ist aus einem einfachen Bedürfnis entstanden:
-          Ich wollte meine eigenen Verbraucher besser planen und verstehen,
-          wie PV, Wärmepumpe und E-Auto zusammen ein stimmiges Bild ergeben –
-          ohne zehn Apps und ohne Excel-Wildwuchs.
+          Der Planer richtet sich an Haushalte mit PV, Wärmepumpe oder E-Auto –
+          und an alle, die ihren Stromverbrauch bewusster gestalten möchten,
+          ohne sich in Technik zu verlieren.
         </p>
         <p>
-          Razen Balance steht für:
-          <br>• bewussten Umgang mit Energie statt blinden Verbrauch
-          <br>• einfache Werkzeuge statt überladener Lösungen
-          <br>• Balance zwischen Technik, Alltag und Komfort
+          <strong>Razen Balance steht für:</strong><br>
+          • bewussten Umgang mit Energie statt blindem Verbrauch<br>
+          • einfache Werkzeuge statt überladener Smart-Home-Lösungen<br>
+          • eine gute Balance aus Komfort, Kosten und Autarkie
         </p>
         <p>
-          Mich interessiert sehr:
-          <br>• Würdest du so ein Tool gerne mit deinen eigenen Geräten nutzen?
-          <br>• Sollte es deine PV-Anlage, echten Verbrauch oder Tarife einbinden können?
-          <br>• Hast du andere Ideen, wie man Lastverschiebung noch pragmatischer machen kann?
+          Wenn du lieber einmal klar hinschaust, statt jeden Tag aufs Neue zu raten,
+          wie sich alles auf deine Rechnung auswirkt, bist du hier richtig.
         </p>
-        <p>
-          Wenn du Lust hast, gib mir Feedback. So finde ich heraus, ob Razen Balance
-          nur mein persönliches Experiment bleibt – oder für viele Haushalte
-          ein hilfreicher Begleiter werden kann.
+        <p class="helper-text">
+          <a href="app.html">→ Home-Energy Planer jetzt ausprobieren</a>
         </p>
-      </div>
+      </section>
+    </div>
+
+    <div class="zen-footer">
+      <span><span class="zen-dot"></span> Fokus: Klarheit im Tagesprofil statt Datenflut</span>
+      <span><span class="zen-dot pv"></span> PV, Grundlast &amp; Geräte im Zusammenspiel sehen</span>
+      <span><span class="zen-dot grid"></span> Demo: Nur Simulation, keine echten Zählerdaten</span>
     </div>
   </section>
+</main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p class="footer-brand">
-        ⚡ Razen Balance – Home-Energy Planer. Strom clever verschieben statt teuer bezahlen.
-      </p>
-      <div class="footer-links">
-        <a href="impressum.html">Impressum</a>
-        <a href="datenschutz.html">Datenschutz</a>
-      </div>
-    </div>
-  </footer>
+<!-- Hintergrund & Motivation als eigene Karte -->
+<section class="card feedback-card">
+  <h2>Was hinter Razen Balance steckt</h2>
+  <p>
+    Dieses Projekt ist aus einem einfachen Bedürfnis entstanden: Ich wollte
+    verstehen, wie PV, Wärmepumpe und E-Auto zusammenspielen – und wie ich
+    meinen Alltag so legen kann, dass Netzanschluss, Geldbeutel und Nerven
+    gleichzeitig geschont werden.
+  </p>
+  <p>
+    Razen Balance ist kein Konzernprodukt, sondern ein persönliches Experiment:
+    Wie weit kommt man mit einem ehrlichen, pragmatischen Energie-Planer,
+    bevor die üblichen „App-Abo-Komplex“-Muster einsetzen?
+  </p>
+  <p>
+    Wenn du Ideen oder Wünsche hast:
+    <br>• Welche Geräte fehlen dir?
+    <br>• Welche Tarife oder Preismodelle würdest du gerne durchspielen?
+    <br>• Was würde dir helfen, deinen Energie-Alltag noch entspannter zu machen?
+  </p>
+  <p>
+    Dein Feedback entscheidet mit, wohin Razen Balance sich entwickelt – ob es
+    ein kleines Nerd-Projekt bleibt oder ein Werkzeug, das viele Haushalte nutzen.
+  </p>
+  <p class="helper-text">
+    Die eigentliche Demo findest du hier:
+    <a href="app.html">→ Home-Energy Planer öffnen</a>
+  </p>
+</section>
+
+<footer>
+  <span>© 2025 Razen Balance · Home-Energy Planer</span>
+  <span>
+    <a href="impressum.html">Impressum</a>
+    &nbsp;·&nbsp;
+    <a href="datenschutz.html">Datenschutz</a>
+  </span>
+</footer>
+
 </body>
 </html>
