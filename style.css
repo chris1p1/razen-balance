@@ -598,7 +598,29 @@ main {
   background:
     radial-gradient(circle at top left, rgba(16,185,129,0.12), transparent 60%);
 }
+/* Minimierte Geräte: nur Name + aktiv-Checkbox sichtbar */
+.device-row.collapsed {
+  background:
+    radial-gradient(circle at top left, rgba(16,185,129,0.04), transparent 60%);
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
+}
 
+/* Details ausblenden, wenn nicht aktiv */
+.device-row.collapsed .device-controls,
+.device-row.collapsed .device-meta {
+  display: none;
+}
+.device-enable span {
+  font-size: 0.72rem;
+  color: var(--text-soft);
+}
+
+.device-row:not(.collapsed) .device-name::after {
+  content: " · aktiv";
+  font-size: 0.7rem;
+  color: #047857;
+}
 .device-header {
   display: flex;
   justify-content: space-between;
