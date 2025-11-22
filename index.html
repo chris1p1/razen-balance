@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Razen Balance – Energie im Alltag einfach ausgleichen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root {
+      --sand: #f5f0e6;
+      --sand-deep: #e3d6c4;
+      --sand-line: rgba(190, 170, 140, 0.35);
+      --stone: #d5c7b8;
+      --stone-soft: rgba(213, 199, 184, 0.85);
+      --text-main: #1f2933;
+      --text-soft: #6b7280;
+      --accent: #10b981;   /* energetisches Grün */
+      --accent-soft: rgba(16,185,129,0.1);
+      --accent-strong: #0ea5e9; /* leichter Energie-Schimmer */
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(255,255,255,0.9), transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(209,250,229,0.7), transparent 55%),
+        linear-gradient(135deg, #f9f5ee 0%, #efe3d3 45%, #e2f5ef 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Zen-Garten Hintergrund – feine Linien */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.4;
+      background-image:
+        repeating-radial-gradient(
+          circle at 20% 120%,
+          transparent 0,
+          transparent 10px,
+          var(--sand-line) 11px,
+          transparent 12px
+        ),
+        repeating-radial-gradient(
+          circle at 80% -20%,
+          transparent 0,
+          transparent 12px,
+          var(--sand-line) 13px,
+          transparent 14px
+        );
+      mix-blend-mode: multiply;
+      z-index: -1;
+    }
+
+    header {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, #ffffff 0, rgba(255,255,255,0) 45%),
+        radial-gradient(circle at 70% 70%, var(--accent-strong) 0, rgba(14,165,233,0.1) 60%);
+      box-shadow:
+        0 0 0 1px rgba(148,163,184,0.35),
+        0 8px 20px rgba(15,118,110,0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 30% 18%;
+      border-radius: 999px;
+      border: 2px solid rgba(255,255,255,0.8);
+      border-top-color: rgba(16,185,129,0.95);
+      transform: rotate(-18deg);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .brand-text span:first-child {
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    .brand-text span:last-child {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .beta-pill {
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      border: 1px solid rgba(148,163,184,0.7);
+      background: rgba(255,255,255,0.8);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-soft);
+    }
+
+    .beta-pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(16,185,129,0.25);
+    }
+
+    main {
+      flex: 1;
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(260px, 1fr);
+      gap: 2.25rem;
+      align-items: center;
+    }
+
+    @media (max-width: 880px) {
+      main {
+        grid-template-columns: 1fr;
+        padding: 1.25rem 1.25rem 1.75rem;
+      }
+      header {
+        padding-inline: 1.25rem;
+      }
+    }
+
+    .hero-text {
+      max-width: 560px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.1rem, 4vw, 2.7rem);
+      line-height: 1.1;
+      margin: 0 0 0.9rem;
+    }
+
+    .hero-title span {
+      color: var(--accent-strong);
+    }
+
+    .hero-subtitle {
+      margin: 0 0 1.2rem;
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      max-width: 36rem;
+    }
+
+    .hero-subtitle-zen {
+      font-size: 0.9rem;
+      color: #4b5563;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 0.7rem 1.4rem;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at 20% 0%, #ecfeff 0, var(--accent) 75%);
+      color: white;
+      box-shadow:
+        0 6px 20px rgba(16,185,129,0.4),
+        0 0 0 1px rgba(16,185,129,0.6);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow:
+        0 10px 26px rgba(16,185,129,0.5),
+        0 0 0 1px rgba(15,118,110,0.7);
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.85);
+      color: var(--text-soft);
+      border: 1px solid rgba(148,163,184,0.7);
+    }
+
+    .btn-ghost:hover {
+      background: white;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(148,163,184,0.45);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .hero-meta span {
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+      background: rgba(255,255,255,0.9);
+    }
+
+    .hero-meta-strong {
+      border-color: rgba(16,185,129,0.65) !important;
+      color: #047857;
+      background: rgba(209,250,229,0.95) !important;
+    }
+
+    /* Rechte Seite – Zen-Karte */
+    .zen-card {
+      position: relative;
+      border-radius: 1.5rem;
+      padding: 1.25rem 1.3rem 1.4rem;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(255,255,255,0.9), transparent 50%),
+        radial-gradient(circle at 110% 170%, rgba(16,185,129,0.18), transparent 55%),
+        linear-gradient(145deg, rgba(255,255,255,0.92), rgba(245,236,224,0.96));
+      box-shadow:
+        0 18px 40px rgba(148,118,94,0.4),
+        0 0 0 1px rgba(214,211,209,0.8);
+      overflow: hidden;
+    }
+
+    .zen-card::before {
+      /* Sandkreis */
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      inset: 45% auto auto 50%;
+      transform: translate(-50%, -55%);
+      background:
+        radial-gradient(circle, rgba(255,255,255,0.95) 0, rgba(245,240,230,0.9) 55%, rgba(230,216,198,0.9) 100%);
+      box-shadow:
+        0 18px 50px rgba(148,118,94,0.45),
+        0 0 0 1px rgba(209,213,219,0.8);
+      z-index: 0;
+    }
+
+    .zen-card::after {
+      /* feine Kreise im Sand */
+      content: "";
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      inset: 46% auto auto 50%;
+      transform: translate(-50%, -55%);
+      border: 1px solid rgba(209,213,219,0.6);
+      box-shadow:
+        0 0 0 10px rgba(209,213,219,0.25),
+        0 0 0 22px rgba(209,213,219,0.18),
+        0 0 0 34px rgba(209,213,219,0.1);
+      opacity: 0.9;
+      z-index: 0;
+    }
+
+    .zen-header {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+
+    .zen-header h2 {
+      margin: 0;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-weight: 600;
+      color: #4b5563;
+    }
+
+    .zen-header span {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .zen-stones {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem;
+      margin-bottom: 1.1rem;
+    }
+
+    @media (max-width: 480px) {
+      .zen-stones {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stone-card {
+      border-radius: 999px;
+      padding: 0.55rem 0.75rem;
+      background: var(--stone-soft);
+      box-shadow:
+        0 6px 18px rgba(148,118,94,0.35),
+        0 0 0 1px rgba(148,118,94,0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 0.18rem;
+      font-size: 0.8rem;
+    }
+
+    .stone-label {
+      font-weight: 500;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .stone-label span:last-child {
+      color: #047857;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stone-sub {
+      font-size: 0.75rem;
+      color: #4b5563;
+    }
+
+    .zen-balance-bar {
+      position: relative;
+      z-index: 1;
+      margin-top: 0.6rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.95);
+      padding: 0.6rem 0.7rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.75rem;
+      color: #4b5563;
+      box-shadow: 0 8px 22px rgba(148,118,94,0.35);
+    }
+
+    .zen-balance-track {
+      position: relative;
+      height: 9px;
+      border-radius: 999px;
+      background:
+        linear-gradient(90deg,
+          rgba(229,231,235,1) 0%,
+          rgba(134,239,172,1) 45%,
+          rgba(96,165,250,1) 100%);
+      overflow: hidden;
+    }
+
+    .zen-balance-dot {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: white;
+      box-shadow:
+        0 0 0 2px rgba(16,185,129,0.85),
+        0 0 0 7px rgba(16,185,129,0.26);
+      top: 50%;
+      left: 46%;
+      transform: translate(-50%, -50%);
+    }
+
+    .zen-balance-meta {
+      display: flex;
+      justify-content: space-between;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .zen-balance-meta span:last-child {
+      color: #047857;
+      font-weight: 500;
+    }
+
+    /* Info-Row unten */
+    .zen-footer {
+      position: relative;
+      z-index: 1;
+      margin-top: 0.7rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      color: var(--text-soft);
+      flex-wrap: wrap;
+    }
+
+    .zen-footer span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .zen-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .zen-dot.pv {
+      background: #facc15;
+    }
+
+    .zen-dot.grid {
+      background: #ef4444;
+    }
+
+    footer {
+      padding: 1rem 1.5rem 1.25rem;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    footer a {
+      color: var(--text-soft);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 640px) {
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-inline: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="brand-mark"></div>
+    <div class="brand-text">
+      <span>RAZEN BALANCE</span>
+      <span>Energie wie ein Zen-Garten</span>
+    </div>
+  </div>
+  <div class="beta-pill">
+    <div class="beta-pill-dot"></div>
+    <span>Private Demo · frühe Phase</span>
+  </div>
+</header>
+
+<main>
+  <!-- Linke Seite: Text -->
+  <section class="hero-text">
+    <div class="hero-eyebrow">Home Energy · Pragmatismus · Ruhe</div>
+    <h1 class="hero-title">
+      Bringe deine <span>Energie</span> in Balance – wie einen Zen-Garten.
+    </h1>
+    <p class="hero-subtitle">
+      Razen Balance hilft dir, Stromverbrauch, PV-Erzeugung und Netzlast
+      so zu ordnen, dass dein Alltag ruhiger wird – ohne Cloud, ohne Abo,
+      ohne Technik-Overkill.
+    </p>
+    <p class="hero-subtitle-zen">
+      <strong>Razen = Ra + Zen.</strong><br>
+      Ra steht für Energie. Zen steht für Ruhe und Klarheit.
+      Razen Balance verbindet beides in einem einfachen, visuellen Energie-Garten.
+    </p>
+
+    <div class="hero-actions">
+      <a href="/app.html" class="btn btn-primary">
+        Demo öffnen
+        <span>→</span>
+      </a>
+      <a href="mailto:iamon@web.de?subject=Razen%20Balance%20–%20Interesse"
+         class="btn btn-ghost">
+        Für Beta vormerken
+      </a>
+    </div>
+
+    <div class="hero-meta">
+      <span class="hero-meta-strong">Offline-Simulation · deine Daten bleiben bei dir</span>
+      <span>15-Minuten-Raster wie beim echten Zähler</span>
+      <span>Fokus auf EV, Wärmepumpe & Haushaltsgeräte</span>
+    </div>
+  </section>
+
+  <!-- Rechte Seite: Energetischer Zen-Garten als Karte -->
+  <section class="zen-card" aria-label="Visualisierung deines Energie-Zen-Gartens">
+    <div class="zen-header">
+      <h2>Dein Energie-Zen-Garten</h2>
+      <span>Ein Tag · ein Blick · bewusst entscheiden</span>
+    </div>
+
+    <div class="zen-stones">
+      <div class="stone-card">
+        <div class="stone-label">
+          <span>Netzimport heute</span>
+          <span>6,3 kWh</span>
+        </div>
+        <div class="stone-sub">Waschmaschine, Spülmaschine & EV clever verschoben.</div>
+      </div>
+      <div class="stone-card">
+        <div class="stone-label">
+          <span>PV-Ernte</span>
+          <span>12,8 kWh</span>
+        </div>
+        <div class="stone-sub">Sommer, sonnig – dein Dach arbeitet für dich.</div>
+      </div>
+    </div>
+
+    <div class="zen-balance-bar">
+      <div>Balancepunkt heute</div>
+      <div class="zen-balance-track">
+        <div class="zen-balance-dot"></div>
+      </div>
+      <div class="zen-balance-meta">
+        <span>Mehr Eigenverbrauch</span>
+        <span>68 % Autarkie</span>
+      </div>
+    </div>
+
+    <div class="zen-footer">
+      <span><span class="zen-dot pv"></span> PV-Zeiten sichtbar machen</span>
+      <span><span class="zen-dot"></span> Geräte wie Steine im Sand verschieben</span>
+      <span><span class="zen-dot grid"></span> Netzspitzen entspannt abflachen</span>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>© <span id="year"></span> Razen Balance – Energie im Gleichgewicht.</span>
+  <span>
+    <a href="/impressum.html">Impressum</a> ·
+    <a href="/datenschutz.html">Datenschutz</a>
+  </span>
+</footer>
+
+<script>
+  // aktuelles Jahr automatisch setzen
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
