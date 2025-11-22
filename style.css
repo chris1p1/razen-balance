@@ -484,3 +484,224 @@
         padding-inline: 1.25rem;
       }
     }
+
+
+
+
+/* ============================= */
+/* App-Container im Zen-Garten  */
+/* ============================= */
+
+/* Hauptbereich: 2 Spalten – links Text, rechts Zen-Karte */
+main {
+  flex: 1;
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr);
+  gap: 2.25rem;
+  align-items: center;
+}
+
+@media (max-width: 880px) {
+  main {
+    grid-template-columns: 1fr;
+    padding: 1.25rem 1.25rem 1.75rem;
+  }
+}
+
+/* Innerer Grid-Container für die App in der Zen-Karte */
+.app-layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 880px) {
+  .app-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Karten der App im hellen Stone/Sand-Stil */
+.card {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(255,255,255,0.95), transparent 55%),
+    linear-gradient(145deg, rgba(245,236,224,0.96), rgba(229,231,235,0.95));
+  border-radius: 1.1rem;
+  border: 1px solid rgba(209, 213, 219, 0.9);
+  padding: 1rem 1.1rem;
+  box-shadow:
+    0 16px 32px rgba(148,118,94,0.28),
+    0 0 0 1px rgba(214,211,209,0.9);
+}
+
+/* Überschrift in den Karten */
+.card h2 {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Kleines Status-Chip, angelehnt an Zen-Pill */
+.chip {
+  display: inline-flex;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,0.7);
+  font-size: 0.7rem;
+  color: var(--text-soft);
+  gap: 0.25rem;
+  align-items: center;
+  background: rgba(255,255,255,0.85);
+}
+
+.chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(16,185,129,0.2);
+}
+
+/* Device-List und Reihen können weitgehend aus der alten App kommen,
+   nur Farben minimal anpassen */
+.device-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.device-row {
+  border-radius: 0.8rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgba(209,213,219,0.9);
+  background:
+    radial-gradient(circle at top left, rgba(16,185,129,0.08), transparent 60%);
+  display: grid;
+  grid-template-columns: auto;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.device-row:hover {
+  border-color: rgba(16,185,129,0.5);
+  background:
+    radial-gradient(circle at top left, rgba(16,185,129,0.12), transparent 60%);
+}
+
+.device-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.device-header-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.device-name {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.device-meta {
+  display: flex;
+  gap: 0.4rem;
+  color: var(--text-soft);
+  font-size: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.device-meta span {
+  white-space: nowrap;
+}
+
+.device-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.1rem;
+}
+
+.range-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.range-row label {
+  font-size: 0.75rem;
+  color: var(--text-soft);
+  min-width: 58px;
+}
+
+input[type="range"] {
+  flex: 1;
+  accent-color: var(--accent);
+}
+
+.time-label {
+  font-size: 0.75rem;
+  color: var(--text-main);
+  min-width: 46px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem;
+  margin-top: 0.1rem;
+}
+
+.toggle-row label {
+  font-size: 0.75rem;
+  color: var(--text-soft);
+}
+
+/* Summary-Badges unter dem Chart */
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+
+.summary-item {
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(209,213,219,0.9);
+  font-size: 0.75rem;
+  color: var(--text-soft);
+  background: rgba(255,255,255,0.9);
+}
+
+.summary-item span {
+  color: #047857;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  margin-left: 0.35rem;
+}
+
+/* Chart etwas kleiner halten */
+canvas {
+  max-height: 450px;
+}
